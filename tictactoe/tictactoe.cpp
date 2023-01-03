@@ -28,14 +28,14 @@ void Init()
     cout<<tabla[2][0]<<" | "<<tabla[2][1]<<" | "<<tabla[2][2];
 }
 
-bool Fill()
+bool IsFill()
 {
     int i,j;
     int contor=0;
 
-    for(i=1;i<=3;i++)
+    for(i=0;i<3;i++)
     {
-        for(j=1;j<=3;j++)
+        for(j=0;j<3;j++)
         {
             if(tabla[i][j]=="x" || tabla[i][j]=="0")
             {
@@ -53,80 +53,111 @@ bool Fill()
 
 void Check()
 {
-    //bool ok=false;
-    int i,j;
+    int i,j,ok;
+    bool finish=false;
 
-    //pe latime
-    for(i=1;i<=3;i++)
+    //verificare linii
+    for(i=0;i<3;i++)
     {
-        for(j=1;j<=3;j++)
+        ok=0;
+        for(j=0;j<3;j++)
         {
-            if(tabla[i][0]==tabla[i][1] && tabla[i][0]==tabla[i][2])
+            if(tabla[i][j]=="x")
             {
-                if(tabla[i][0]=="x")
-                {
-                    cout<<"\nCastigatorul este player 1!!!!\n";
-                    exit(0);
-                }
-                else if(tabla[i][0]=="0")
-                {
-                    cout<<"\nCastigatorul este player 2!!!!\n";
-                    exit(0);
-                }
-                else
-                {
-                    continue;
-                }
+                ok++;
             }
-
-            //pe inaltime
-            else if(tabla[0][j]==tabla[1][j] && tabla[0][j]==tabla[2][j])
+        }
+        if(ok==3)
+        {
+            cout<<"\ncastiga player 1\n";
+            finish=true;
+        }
+    }
+    for(i=0;i<3;i++)
+    {
+        ok=0;
+        for(j=0;j<3;j++)
+        {
+            if(tabla[i][j]=="0")
             {
-                if(tabla[0][j]=="x")
-                {
-                    cout<<"\nCastigatorul este player 1!!!!\n";
-                    exit(0);
-                }
-                else if(tabla[0][j]=="0")
-                {
-                    cout<<"\nCastigatorul este player 2!!!!\n";
-                    exit(0);
-                }
-                else
-                {
-                    continue;
-                }
+                ok++;
             }
+        }
+        if(ok==3)
+        {
+            cout<<"\ncastiga player 2\n";
+            finish=true;
+        }
+    }
 
-            //pe diagonale
-            else if((tabla[0][0]==tabla[1][1] && tabla[1][1]==tabla[2][2]) || (tabla[0][2]==tabla[1][1]&& tabla[1][1]==tabla[2][0]))
+
+    // verificare coloane
+    for(i=0;i<3;i++)
+    {
+        ok=0;
+        for(j=0;j<3;j++)
+        {
+            if(tabla[j][i]=="x")
             {
-                if(tabla[0][0]=="x" || tabla[0][2]=="x")
-                {
-                    cout<<"\nCastigatorul este player 1!!!\n";
-                    exit(0);
-                }
-                else
-                {
-                    cout<<"\nCastigatorul este player 2!!!\n";
-                    exit(0);
-                }
+                ok++;
             }
-
-            else
+        }
+        if(ok==3)
+        {
+            cout<<"\ncastiga player 1\n";
+            finish=true;
+        }
+    }
+    for(i=0;i<3;i++)
+    {
+        ok=0;
+        for(j=0;j<3;j++)
+        {
+            if(tabla[j][i]=="0")
             {
-                
-                if(Fill())
-                {
-                    cout<<"\nREMIZA!!!\n";
-                    exit(0);
-                }
+                ok++;
             }
+        }
+        if(ok==3)
+        {
+            cout<<"\ncastiga player 2\n";
+            finish=true;
+        }
+    }
 
+
+    //verificare diagonale
+
+    if( (tabla[0][0]==tabla[1][1] && tabla[0][0]==tabla[2][2]) || (tabla[0][2]==tabla[1][1] && tabla[0][2]==tabla[2][0]) )
+    {
+        if(tabla[0][0]=="x" || tabla[2][0]=="x")
+        {
+            cout<<"\ncatiga player 1\n";
+            finish=true;
+        }
+    }
+    if( (tabla[0][0]==tabla[1][1] && tabla[0][0]==tabla[2][2]) || (tabla[0][2]==tabla[1][1] && tabla[0][2]==tabla[2][0]) )
+    {
+        if(tabla[0][0]=="0" || tabla[2][0]=="0")
+        {
+            cout<<"\ncatiga player 2\n";
+            finish=true;
+        }
+    }
+
+    if(finish)
+    {
+        cout<<"\nAvem un castigator!!!\n";
+        exit(1);
+    }
+    else
+    {
+        if(IsFill())
+        {
+            cout<<"\nREMIZA!!\n";
         }
     }
 }
-
 
 void Game()
 {
@@ -161,25 +192,38 @@ void Game()
     {
         tabla[linie][coloana]="x";
         turn ="0";
-        //Check();
+        Check();
+        if(!IsFill())
+        {
+            Init();
+            Game();
+        }
     }
 
     else if(turn=="0" && (tabla[linie][coloana]!= "x" && tabla[linie][coloana]!="0"))
     {
         tabla[linie][coloana]="0";
         turn ="x";
-        //Check();
+        Check();
+        if(!IsFill())
+        {
+            Init();
+            Game();
+        }
     }
 
     else
     {
         cout<<"\npozitia este ocupata\n";
-        Game();
+        if(!IsFill())
+        {
+            Init();
+            Check();
+            Game();
+        }
     }
-    Check();
-    Init();
-    Game();
 }
+
 
 
 int main()
@@ -189,5 +233,4 @@ int main()
     Game();
     cout<<"\n";
     return 0;
-
 }
