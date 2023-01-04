@@ -189,6 +189,15 @@ void Check()
         if(scor1==2 || scor2==2)
         {
             cout<<endl;
+            if(scor1>scor2)
+            {
+                cout<<"\nCel mai mare scor il are player 1!!!\n";
+            }
+            else
+            {
+                cout<<"\nCel mai mare scor il are player 2!!!\n";
+            }
+            cout<<endl;
             cout<<"\nJOCUL S-A INCHEIAT!!\n";
             cout<<endl;
             exit(1);
@@ -207,6 +216,15 @@ void Check()
             Scor();
             if(scor1==2 || scor2==2)
             {
+                cout<<endl;
+                if(scor1>scor2)
+                {
+                    cout<<"\nCel mai mare scor il are player 1!!!\n";
+                }
+                else
+                {
+                    cout<<"\nCel mai mare scor il are player 2!!!\n";
+                }
                 cout<<endl;
                 cout<<"\nJOCUL S-A INCHEIAT!!\n";
                 cout<<endl;
