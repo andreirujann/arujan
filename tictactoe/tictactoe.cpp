@@ -7,12 +7,21 @@ string tabla[3][3]={ {"1","2","3"}, {"4","5","6"}, {"7","8","9"}};
 int chose;
 int linie,coloana;
 string turn= "x";// else "0"
-
+int scor1;
+int scor2;
 
 void Header()
 {
     cout<<"\nTIC TAC TOE GAME\n";
     cout<<"\nplayer 1: x     player 2: 0\n";
+    cout<<endl;
+    cout<<endl;
+}
+
+void Scor()
+{
+    cout<<"\nScorul celor 2 jucatori este:\n";
+    cout<<"\nplayer1-----"<<scor1<<"    player2-----"<<scor2<<endl;
     cout<<endl;
     cout<<endl;
 }
@@ -28,7 +37,7 @@ void Init()
     cout<<tabla[2][0]<<" | "<<tabla[2][1]<<" | "<<tabla[2][2];
 }
 
-bool IsFill()
+bool IsEmpty()
 {
     int i,j;
     int contor=0;
@@ -70,6 +79,7 @@ void Check()
         if(ok==3)
         {
             cout<<"\ncastiga player 1\n";
+            scor1+=1;
             finish=true;
         }
     }
@@ -86,6 +96,7 @@ void Check()
         if(ok==3)
         {
             cout<<"\ncastiga player 2\n";
+            scor2+=1;
             finish=true;
         }
     }
@@ -105,6 +116,7 @@ void Check()
         if(ok==3)
         {
             cout<<"\ncastiga player 1\n";
+            scor1+=1;
             finish=true;
         }
     }
@@ -121,6 +133,7 @@ void Check()
         if(ok==3)
         {
             cout<<"\ncastiga player 2\n";
+            scor2+=1;
             finish=true;
         }
     }
@@ -133,6 +146,7 @@ void Check()
         if(tabla[0][0]=="x" || tabla[2][0]=="x")
         {
             cout<<"\ncatiga player 1\n";
+            scor1+=1;
             finish=true;
         }
     }
@@ -141,6 +155,7 @@ void Check()
         if(tabla[0][0]=="0" || tabla[2][0]=="0")
         {
             cout<<"\ncatiga player 2\n";
+            scor2+=1;
             finish=true;
         }
     }
@@ -148,11 +163,12 @@ void Check()
     if(finish)
     {
         cout<<"\nAvem un castigator!!!\n";
+        Scor();
         exit(1);
     }
     else
     {
-        if(IsFill())
+        if(IsEmpty())
         {
             cout<<"\nREMIZA!!\n";
         }
@@ -193,7 +209,7 @@ void Game()
         tabla[linie][coloana]="x";
         turn ="0";
         Check();
-        if(!IsFill())
+        if(!IsEmpty())
         {
             Init();
             Game();
@@ -205,7 +221,7 @@ void Game()
         tabla[linie][coloana]="0";
         turn ="x";
         Check();
-        if(!IsFill())
+        if(!IsEmpty())
         {
             Init();
             Game();
@@ -215,7 +231,7 @@ void Game()
     else
     {
         cout<<"\npozitia este ocupata\n";
-        if(!IsFill())
+        if(!IsEmpty())
         {
             Init();
             Check();
@@ -228,9 +244,13 @@ void Game()
 
 int main()
 {
+    
+    
     Header();
+    Scor();
     Init();
     Game();
+    
     cout<<"\n";
     return 0;
 }
