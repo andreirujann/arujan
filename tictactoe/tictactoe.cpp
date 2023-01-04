@@ -10,6 +10,28 @@ string turn= "x";// else "0"
 int scor1;
 int scor2;
 
+void Board()
+{
+    int i,j;
+
+    for(i=0;i<3;i++)
+    {
+        for(j=0;j<3;j++)
+        {
+            tabla[i][j]=(i+1)*(j+1);
+        }
+    }
+
+    for(i=0;i<3;i++)
+    {
+        for(j=0;j<3;j++)
+        {
+            cout<<tabla[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
+
 void Header()
 {
     cout<<"\nTIC TAC TOE GAME\n";
@@ -164,13 +186,36 @@ void Check()
     {
         cout<<"\nAvem un castigator!!!\n";
         Scor();
-        exit(1);
+        if(scor1==2 || scor2==2)
+        {
+            cout<<endl;
+            cout<<"\nJOCUL S-A INCHEIAT!!\n";
+            cout<<endl;
+            exit(1);
+        }
+        else
+        {
+            Board();
+        }
+        
     }
     else
     {
         if(IsEmpty())
         {
             cout<<"\nREMIZA!!\n";
+            Scor();
+            if(scor1==2 || scor2==2)
+            {
+                cout<<endl;
+                cout<<"\nJOCUL S-A INCHEIAT!!\n";
+                cout<<endl;
+                exit(1);
+            }
+            else
+            {
+                Board();
+            }
         }
     }
 }
@@ -244,7 +289,6 @@ void Game()
 
 int main()
 {
-    
     
     Header();
     Scor();
